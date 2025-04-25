@@ -1,6 +1,7 @@
 package net.crayonsmp;
 
 
+import de.bluecolored.bluemap.api.BlueMapAPI;
 import dev.turingcomplete.textcaseconverter.StandardTextCases;
 import dev.turingcomplete.textcaseconverter.StandardWordsSplitters;
 import org.bukkit.Bukkit;
@@ -19,9 +20,10 @@ import java.util.List;
 public interface CrayonModule {
     String getName();
     default String getAuthor(){return "";}
-    void onLoad(CrayonAPI api); // oder einfach kein Parameter
+    default void OnBlueMapEnabled(BlueMapAPI blueMapAPI){}
+    default void onLoad(CrayonAPI api) {} // oder einfach kein Parameter
     <API extends Plugin & CrayonAPI> void onEnable(API plugin);
-    void onDisable();
+    default void onDisable() {}
     default PluginCommand registerCommand(String name, Plugin plugin) {
         try {
             Constructor<PluginCommand> pluginCommandConstructor = PluginCommand.class.getDeclaredConstructor(String.class,Plugin.class);

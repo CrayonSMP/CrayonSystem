@@ -1,5 +1,6 @@
 package net.crayonsmp.crayonCore;
 
+import de.bluecolored.bluemap.api.BlueMapAPI;
 import net.crayonsmp.CrayonAPI;
 import net.crayonsmp.CrayonModule;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -7,6 +8,7 @@ import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -14,11 +16,16 @@ import java.util.logging.Level;
 public class CrayonCore extends JavaPlugin implements CrayonAPI {
 
     private final List<CrayonModule> loadedModules = new ArrayList<>();
-
+    private void onBlueMapApiLoaded(BlueMapAPI api){
+        for (CrayonModule module : loadedModules){
+            module.OnBlueMapEnabled(api);
+        }
+    }
     @Override
     public void onLoad() {
         getLogger().info("Loading CrayonCore...");
         getLogger().info("Scanning for modules...");
+
 
         String modulePackage = "net.crayonsmp"; // <--- HIER ANPASSEN!
 
@@ -58,6 +65,7 @@ public class CrayonCore extends JavaPlugin implements CrayonAPI {
                 // Fahre mit dem nächsten Modul fort, anstatt komplett abzubrechen
             }
         }
+        BlueMapAPI.onEnable(this::onBlueMapApiLoaded);
         getLogger().info("Finished module loading sequence. Total modules loaded: " + loadedModules.size());
     }
 

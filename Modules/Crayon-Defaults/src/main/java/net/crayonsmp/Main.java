@@ -24,9 +24,4 @@ public class Main implements CrayonModule {
     public <API extends Plugin & CrayonAPI> void onEnable(API plugin) {
         registerCommand("modules",plugin).setExecutor(new ModulesCommand(plugin));
     }
-
-    @Override
-    public void onDisable() {
-        // Aufräumen
-    }
 }
