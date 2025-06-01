@@ -27,7 +27,7 @@ public class DatapackManager {
     public DatapackManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        // Den Pfad zum Quellordner festlegen
+
         this.sourceDatapacksFolder = new File(plugin.getDataFolder(), "/datapacks");
     }
 
@@ -65,9 +65,8 @@ public class DatapackManager {
 
             if (!worldDatapacksFolder.isDirectory()) {
                 logger.severe("World datapacks path is not a directory for world '" + world.getName() + "': " + worldDatapacksFolder.getAbsolutePath());
-                continue; // Diese Welt überspringen
+                continue;
             }
-
 
             List<File> copiedInThisWorld = new ArrayList<>();
             for (File datapackFile : datapackFiles) {
@@ -90,11 +89,6 @@ public class DatapackManager {
 
         if (copiedCount > 0) {
             logger.info("Finished copying " + copiedCount + " datapack file(s). Triggering server reload...");
-//            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-//                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-//                Bukkit.dispatchCommand(console, "minecraft:reload");
-//                logger.info("Server reload command executed.");
-//            }, 40L); // Etwas längere Verzögerung zur Sicherheit
         } else {
             logger.info("No datapacks were copied to any world.");
         }
@@ -118,7 +112,6 @@ public class DatapackManager {
                 continue; // Überspringe diese Welt
             }
 
-
             for (File file : filesToDelete) {
                 if (file.exists()) {
                     if (file.delete()) {
@@ -135,6 +128,5 @@ public class DatapackManager {
 
         copiedDatapacks.clear(); // Referenzen löschen
         logger.info("Cleanup finished. " + deletedCount + " datapack file(s) attempted to delete.");
-
     }
 }

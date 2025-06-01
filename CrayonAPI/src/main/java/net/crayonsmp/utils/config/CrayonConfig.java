@@ -9,20 +9,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public class SConfig extends YamlConfiguration {
+public class CrayonConfig extends YamlConfiguration {
+
     private final File file;
     private final String name;
 
-    public SConfig(File file, String name) {
+    public CrayonConfig(File file, String name) {
         super();
         this.file = file;
         this.name = name;
         try {
             super.load(file);
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
-        } catch (InvalidConfigurationException ex) {
+        } catch (FileNotFoundException ignored) {
+        } catch (IOException | InvalidConfigurationException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
         }
     }

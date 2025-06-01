@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class DebugListener implements Listener {
+
     @EventHandler
     public void onDebug(DebugEvent event){
-        //Here create debug code for youre module.
     }
 }

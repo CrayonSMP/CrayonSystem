@@ -1,17 +1,20 @@
 package net.crayonsmp.managers;
 
-import net.crayonsmp.Main;
+import net.crayonsmp.CrayonDefaultModule;
 import net.crayonsmp.utils.*;
-import net.crayonsmp.utils.config.SConfig;
+import net.crayonsmp.utils.config.CrayonConfig;
+import net.crayonsmp.utils.serialization.Magic;
+import net.crayonsmp.utils.serialization.PlayerGoal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ConfigManager {
+
     public static void registergoalconfig() {
-        SConfig config = Main.GoalConfig;
-        SConfig playergoaldata = Main.PlayerGoalData;
+        CrayonConfig config = CrayonDefaultModule.goalConfig;
+        CrayonConfig playergoaldata = CrayonDefaultModule.playerGoalData;
+
         //Register Default Goals and Magics
         if (!config.getFile().isFile()) {
             config.setDefault("goals.good.good_eternal_spring.name", "Eternal Spring Sanctuary");
@@ -47,15 +50,15 @@ public class ConfigManager {
         //Register All Goals
         HashMap<String, Goal> goals = new HashMap<>();
         config.getConfigurationSection("goals.good").getKeys(false).forEach(key -> {
-            Goal goal = new Goal(key, GoalType.good, config.getString("goals.good." + key + ".name"), config.getString("goals.good." + key + ".id"), config.getStringList("goals.good." + key + ".description"), config.getStringList("goals.good." + key + ".magics.primary"), config.getStringList("goals.good." + key + ".magics.secondary"));
+            Goal goal = new Goal(key, GoalType.GOOD, config.getString("goals.good." + key + ".name"), config.getString("goals.good." + key + ".id"), config.getStringList("goals.good." + key + ".description"), config.getStringList("goals.good." + key + ".magics.primary"), config.getStringList("goals.good." + key + ".magics.secondary"));
             goals.put(goal.getID(), goal);
         });
         config.getConfigurationSection("goals.neutral").getKeys(false).forEach(key -> {
-            Goal goal = new Goal(key, GoalType.neutral, config.getString("goals.neutral." + key + ".name"), config.getString("goals.neutral." + key + ".id"), config.getStringList("goals.neutral." + key + ".description"), config.getStringList("goals.neutral." + key + ".magics.primary"), config.getStringList("goals.neutral." + key + ".magics.secondary"));
+            Goal goal = new Goal(key, GoalType.NEUTRAL, config.getString("goals.neutral." + key + ".name"), config.getString("goals.neutral." + key + ".id"), config.getStringList("goals.neutral." + key + ".description"), config.getStringList("goals.neutral." + key + ".magics.primary"), config.getStringList("goals.neutral." + key + ".magics.secondary"));
             goals.put(goal.getID(), goal);
         });
         config.getConfigurationSection("goals.bad").getKeys(false).forEach(key -> {
-            Goal goal = new Goal(key, GoalType.bad, config.getString("goals.bad." + key + ".name"), config.getString("goals.bad." + key + ".id"), config.getStringList("goals.bad." + key + ".description"), config.getStringList("goals.bad." + key + ".magics.primary"), config.getStringList("goals.bad." + key + ".magics.secondary"));
+            Goal goal = new Goal(key, GoalType.BAD, config.getString("goals.bad." + key + ".name"), config.getString("goals.bad." + key + ".id"), config.getStringList("goals.bad." + key + ".description"), config.getStringList("goals.bad." + key + ".magics.primary"), config.getStringList("goals.bad." + key + ".magics.secondary"));
             goals.put(goal.getID(), goal);
         });
 

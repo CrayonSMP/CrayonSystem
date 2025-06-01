@@ -1,50 +1,30 @@
-package net.crayonsmp.utils;
+package net.crayonsmp.utils.serialization;
 
-
+import lombok.RequiredArgsConstructor;
+import net.crayonsmp.utils.Goal;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+@RequiredArgsConstructor
 @SerializableAs("CrayonPlayerGoal")
 public class PlayerGoal implements ConfigurationSerializable {
 
+    @NotNull
     private final Goal goal;
 
+    @NotNull
     private final Magic magicPrimery;
 
+    @NotNull
     private final Magic magicSecondary;
-
-    public PlayerGoal(Goal goal, Magic MagicPrimery, Magic MagicSecondary) {
-        if (goal == null) {
-            throw new IllegalArgumentException("PlayerGoal goal cannot be null.");
-        }
-        if (MagicPrimery == null) {
-            throw new IllegalArgumentException("PlayerGoal MagicPrimeryList cannot be null.");
-        }
-        if (MagicSecondary == null) {
-            throw new IllegalArgumentException("PlayerGoal MagicSecondaryList cannot be null.");
-        }
-        this.goal = goal;
-        this.magicPrimery = MagicPrimery;
-        this.magicSecondary = MagicSecondary;
-    }
 
     public PlayerGoal(Map<String, Object> map) {
         this.goal = (Goal) map.get("goal"); // Cast to Goal
         this.magicPrimery = (Magic) map.get("magicPrimery"); // Cast to Magic
         this.magicSecondary = (Magic) map.get("magicSecondary"); // Cast to Magic
-
-        // Basic validation for deserialized data
-        if (this.goal == null) {
-            throw new IllegalArgumentException("Deserialized PlayerGoal 'goal' cannot be null.");
-        }
-        if (this.magicPrimery == null) {
-            throw new IllegalArgumentException("Deserialized PlayerGoal 'magicPrimery' cannot be null.");
-        }
-        if (this.magicSecondary == null) {
-            throw new IllegalArgumentException("Deserialized PlayerGoal 'magicSecondary' cannot be null.");
-        }
     }
 
     @Override
@@ -59,9 +39,11 @@ public class PlayerGoal implements ConfigurationSerializable {
     public Goal getGoal() {
         return goal;
     }
+
     public Magic getMagicPrimery() {
         return magicPrimery;
     }
+
     public Magic getMagicSecondary() {
         return magicSecondary;
     }

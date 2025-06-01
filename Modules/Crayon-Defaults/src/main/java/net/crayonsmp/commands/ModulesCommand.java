@@ -1,7 +1,9 @@
 package net.crayonsmp.commands;
 
+import lombok.RequiredArgsConstructor;
 import net.crayonsmp.CrayonAPI;
-import net.crayonsmp.interfaces.CrayonModule;
+import net.crayonsmp.CrayonCommand;
+import net.crayonsmp.modules.CrayonModule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,17 +12,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class ModulesCommand implements CommandExecutor {
+@RequiredArgsConstructor
+public class ModulesCommand implements CrayonCommand {
 
     private final CrayonAPI api;
 
-    public ModulesCommand(CrayonAPI api) {
-        this.api = api;
+    @Override
+    public String getCommand() {
+        return "modules";
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-
         sender.sendMessage(Component.text("ℹ")
                 .color(TextColor.color(0x349FDA))
                 .append(Component.text(" Server Modules (" + api.loadedModules().size() + "):")
@@ -44,7 +47,6 @@ public class ModulesCommand implements CommandExecutor {
 
             sender.sendMessage(moduleLine);
         }
-
         return true;
     }
 }

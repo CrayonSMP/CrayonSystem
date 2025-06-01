@@ -1,5 +1,4 @@
-package net.crayonsmp.interfaces;
-
+package net.crayonsmp.modules;
 
 import dev.turingcomplete.textcaseconverter.StandardTextCases;
 import dev.turingcomplete.textcaseconverter.StandardWordsSplitters;
@@ -9,23 +8,40 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
 
-public interface CrayonModule {
-    String getName();
-    default String getAuthor(){return "";}
-    String getVersion();
-    default void onLoad(CrayonAPI api) {} // oder einfach kein Parameter
-    <API extends Plugin & CrayonAPI> void onEnable(API plugin);
-    default void onDisable() {}
-    default PluginCommand registerCommand(String name, Plugin plugin) {
+public abstract class CrayonModule {
+
+    public abstract String getName();
+
+    public abstract String getVersion();
+
+    public Logger getLogger() {
+        return Bukkit.getLogger();
+    }
+
+    public abstract <API extends JavaPlugin & CrayonAPI> void onEnable(API plugin);
+
+    public String getAuthor() {
+        return "";
+    }
+
+    public void onLoad(CrayonAPI api) {
+    } // oder einfach kein Parameter
+
+    public void onDisable() {
+    }
+
+    public PluginCommand registerCommand(String name, JavaPlugin plugin) {
         try {
-            Constructor<PluginCommand> pluginCommandConstructor = PluginCommand.class.getDeclaredConstructor(String.class,Plugin.class);
+            Constructor<PluginCommand> pluginCommandConstructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
             pluginCommandConstructor.setAccessible(true);
-            PluginCommand command = pluginCommandConstructor.newInstance(name,plugin);
+            PluginCommand command = pluginCommandConstructor.newInstance(name, plugin);
             if (Bukkit.getPluginManager() instanceof SimplePluginManager pluginManager) {
                 try {
                     Field commandMapField = pluginManager.getClass().getDeclaredField("commandMap");
@@ -38,9 +54,9 @@ public interface CrayonModule {
                 }
             }
             return null;
-        } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+        } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
+                 IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

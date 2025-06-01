@@ -1,57 +1,34 @@
 package net.crayonsmp.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+import net.crayonsmp.utils.serialization.Magic;
+import net.crayonsmp.utils.serialization.PlayerGoalPlaceholder;
 import org.bukkit.inventory.Inventory;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@Getter
+@Setter
 public class GoalInventory {
+
+    private final Map<GoalType, PlayerGoalPlaceholder> placeholders = new HashMap<>();
+
     private final Inventory inv;
-    public GoalType selectetPlaceholder;
-    private final PlayerGoalPlaceholder goodPlaceholder;
-    private final PlayerGoalPlaceholder neutralPlaceholder;
-    private final PlayerGoalPlaceholder badPlaceholder;
+    public GoalType selectedPlaceholder;
+    public Magic selectedPrimaryMagic;
+    public Magic selectedSecondaryMagic;
 
-    public Magic selectetPrimaryMagic;
-    public Magic selectetSecondaryMagic;
-
-
-
-    public GoalInventory(Inventory inv, PlayerGoalPlaceholder goodPlaceholder, PlayerGoalPlaceholder neutralPlaceholder, PlayerGoalPlaceholder badPlaceholder) {
+    public GoalInventory(PlayerGoalPlaceholder goodPlaceholder, PlayerGoalPlaceholder neutralPlaceholder, PlayerGoalPlaceholder badPlaceholder, Inventory inv) {
+        this.placeholders.put(GoalType.GOOD, goodPlaceholder);
+        this.placeholders.put(GoalType.NEUTRAL, neutralPlaceholder);
+        this.placeholders.put(GoalType.BAD, badPlaceholder);
         this.inv = inv;
-        this.goodPlaceholder = goodPlaceholder;
-        this.neutralPlaceholder = neutralPlaceholder;
-        this.badPlaceholder = badPlaceholder;
     }
 
-    public Inventory getInv() {
-        return inv;
+    public PlayerGoalPlaceholder getPlaceholder(GoalType type) {
+        return placeholders.get(type);
     }
 
-    public PlayerGoalPlaceholder getGoodPlaceholder() {
-        return goodPlaceholder;
-    }
-
-    public PlayerGoalPlaceholder getNeutralPlaceholder() {
-        return neutralPlaceholder;
-    }
-
-    public PlayerGoalPlaceholder getBadPlaceholder() {
-        return badPlaceholder;
-    }
-    public GoalType getSelectetPlaceholder() {
-        return selectetPlaceholder;
-    }
-    public void setSelectetPlaceholder(GoalType selectetPlaceholder) {
-        this.selectetPlaceholder = selectetPlaceholder;
-    }
-    public Magic getSelectetPrimaryMagic() {
-        return selectetPrimaryMagic;
-    }
-    public void setSelectetPrimaryMagic(Magic selectetPrimaryMagic) {
-        this.selectetPrimaryMagic = selectetPrimaryMagic;
-    }
-    public Magic getSelectetSecondaryMagic() {
-        return selectetSecondaryMagic;
-    }
-    public void setSelectetSecondaryMagic(Magic selectetSecondaryMagic) {
-        this.selectetSecondaryMagic = selectetSecondaryMagic;
-    }
 }

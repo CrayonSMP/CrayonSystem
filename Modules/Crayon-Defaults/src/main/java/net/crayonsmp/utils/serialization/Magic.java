@@ -1,11 +1,11 @@
-package net.crayonsmp.utils;
+package net.crayonsmp.utils.serialization;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 import java.util.Collections; // Für immutable Listen
 import java.util.ArrayList;   // Für defensive Kopie
-import java.io.Serializable; // Empfohlen für die Serialisierung in PlayerGoal
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +23,9 @@ public class Magic implements ConfigurationSerializable {
     private final java.util.List<String> theme;
 
     public Magic(String id, String name, java.util.List<String> description, java.util.List<String> theme) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Magic id cannot be null or empty.");
-        }
+        Preconditions.checkNotNull(id);
+        Preconditions.checkState(!id.trim().isEmpty(), "Magic id cannot be empty");
+
         this.name = (name != null) ? name.trim() : "";
 
         this.id = id.trim();
@@ -41,19 +41,15 @@ public class Magic implements ConfigurationSerializable {
         this.theme = (List<String>) map.get("theme");
 
         // Basic validation for deserialized data
-        if (this.id == null || this.id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Deserialized Magic 'id' cannot be null or empty.");
-        }
-        // Ensure lists are not null if not stored as empty
-        if (this.description == null) {
+        Preconditions.checkNotNull(id, "Magic id cannot be null.");
+        Preconditions.checkState(!id.isEmpty(), "Magic id cannot be empty.");
+//        if (this.description == null) {
             // Handle cases where 'description' might be missing in older configs
             // Or log a warning if it's expected to always be there.
             // For now, setting to empty list to avoid NPEs later
             // The original constructor already handles null, so let's stick to that style
             // this.description = Collections.emptyList();
-        }
-        // You might want to re-wrap these into unmodifiable lists if you deserialize them
-        // this.description = Collections.unmodifiableList(new ArrayList<>(this.description));
+//        }
     }
 
 

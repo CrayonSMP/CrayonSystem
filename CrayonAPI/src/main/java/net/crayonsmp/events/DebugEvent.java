@@ -4,9 +4,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class DebugEvent extends Event {
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    public DebugEvent() {}
+    public DebugEvent() {
+    }
+
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
