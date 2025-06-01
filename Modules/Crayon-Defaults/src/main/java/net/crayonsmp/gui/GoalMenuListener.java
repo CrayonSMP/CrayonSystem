@@ -24,8 +24,8 @@ public class GoalMenuListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (!GoalManager.hasPlayerGoalData(p)) {
-            GoalMenu.openGoalMenu(p);
+        if (!GoalManager.hasPlayerGoalData(player)) {
+            GoalMenu.openGoalMenu(player);
         }
     }
 
@@ -33,26 +33,26 @@ public class GoalMenuListener implements Listener {
     public void onPlayerCloseInv(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
-        if (!GoalMenu.GOAL_INVENTORIES.containsKey(p) || GoalManager.hasPlayerGoalData(p)) {
-            if (GoalMenu.GOAL_INVENTORIES.containsKey(p) && GoalManager.hasPlayerGoalData(p)) {
-                GoalMenu.GOAL_INVENTORIES.remove(p);
+        if (!GoalMenu.GOAL_INVENTORIES.containsKey(player) || GoalManager.hasPlayerGoalData(player)) {
+            if (GoalMenu.GOAL_INVENTORIES.containsKey(player) && GoalManager.hasPlayerGoalData(player)) {
+                GoalMenu.GOAL_INVENTORIES.remove(player);
             }
             return;
         }
 
-        GoalInventory goalInventory = GoalMenu.GOAL_INVENTORIES.get(p);
+        GoalInventory goalInventory = GoalMenu.GOAL_INVENTORIES.get(player);
 
         if (goalInventory.selectedPlaceholder == null || goalInventory.selectedPrimaryMagic == null || goalInventory.selectedSecondaryMagic == null) {
             Bukkit.getScheduler().runTaskLater(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("CrayonCore")), () -> {
-                if (p.isOnline() && GoalMenu.GOAL_INVENTORIES.containsKey(p)) {
+                if (player.isOnline() && GoalMenu.GOAL_INVENTORIES.containsKey(player)) {
                     player.openInventory(goalInventory.getInv());
                 }
             }, 1L);
             return;
         }
 
-        GoalManager.addPlayerGoalData(p.getUniqueId().toString(), new PlayerGoal(goalInventory.getPlaceholder(goalInventory.selectedPlaceholder).getGoal(), goalInventory.selectedPrimaryMagic, goalInventory.selectedSecondaryMagic));
-        GoalMenu.GOAL_INVENTORIES.remove(p);
+        GoalManager.addPlayerGoalData(player.getUniqueId().toString(), new PlayerGoal(goalInventory.getPlaceholder(goalInventory.selectedPlaceholder).getGoal(), goalInventory.selectedPrimaryMagic, goalInventory.selectedSecondaryMagic));
+        GoalMenu.GOAL_INVENTORIES.remove(player);
         player.sendMessage("You can always look at your goal with /goal");
     }
 

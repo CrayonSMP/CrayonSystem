@@ -74,13 +74,14 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        GoalManager.applySeconderyEffects(p);
+        GoalManager.applySeconderyEffects(player);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        GoalManager.removeAllSecondaryEffects(p);
+
+        GoalManager.removeAllSecondaryEffects(player);
     }
 
     @EventHandler
@@ -93,14 +94,14 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if (!GoalManager.hasPlayerGoalData(p)) {
-            if (p.getWalkSpeed() == 1.2F) {
+        if (!GoalManager.hasPlayerGoalData(player)) {
+            if (player.getWalkSpeed() == 1.2F) {
                 player.setWalkSpeed(0.2F);
             }
             return;
         }
-        if (!GoalManager.hasPlayerMagicSeconderyType(p, "ICE")) {
-            if (p.getWalkSpeed() == 1.2F) {
+        if (!GoalManager.hasPlayerMagicSeconderyType(player, "ICE")) {
+            if (player.getWalkSpeed() == 1.2F) {
                 player.setWalkSpeed(0.2F);
             }
             return;
