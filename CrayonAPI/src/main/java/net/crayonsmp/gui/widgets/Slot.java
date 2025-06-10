@@ -16,7 +16,7 @@ public class Slot implements InventoryWidget {
 
     @Override
     public boolean onClicked(InventoryClickEvent e) {
-        onClicked.accept(e);
+        onClick.accept(e);
         return true;
     }
     public boolean isOutput(){

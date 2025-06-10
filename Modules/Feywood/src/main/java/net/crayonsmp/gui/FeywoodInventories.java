@@ -34,7 +34,6 @@ public class FeywoodInventories {
     private static void updateFeywoodTable(InventoryClickEvent e){
         if (e.getInventory().getHolder() instanceof BuiltInventoryHolder holder){
             InventoryBuilder builder = holder.getBuilder();
-            builder.clearWidgets(OutputSlot.class);
             FeywoodTableRecipe recipe = CustomCrafting.findBestCustomCrafting(FeywoodTableRecipe.Type.INSTANCE,List.of(e.getInventory().getItem(16) != null ? e.getInventory().getItem(16) : e.getSlot() == 16 ? e.getCursor() : ItemStack.empty(),e.getInventory().getItem(43) != null ? e.getInventory().getItem(43) : e.getSlot() == 43 ? e.getCursor() : ItemStack.empty()));
             if (recipe == null){
                 return;
