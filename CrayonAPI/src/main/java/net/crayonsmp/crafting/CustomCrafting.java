@@ -58,7 +58,6 @@ public abstract class CustomCrafting {
     public static <T extends CustomCrafting> T findBestCustomCrafting(CustomCraftingType<T> type, List<ItemStack> itemStacks) {
         for (T crafting : type.CRAFTINGS) {
             if (crafting.matches(itemStacks)) {
-
                 return crafting;
             }
         }

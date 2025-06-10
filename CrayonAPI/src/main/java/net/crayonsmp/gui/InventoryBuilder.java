@@ -1,15 +1,15 @@
 package net.crayonsmp.gui;
 
+import net.crayonsmp.gui.widgets.Slot;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 
 public class InventoryBuilder {
 
@@ -17,6 +17,7 @@ public class InventoryBuilder {
     private int rowAmount = 3;
     private InventoryType type = null;
     private Component title = Component.empty();
+
 
     public InventoryBuilder setTitle(Component title) {
         this.title = title;
@@ -75,5 +76,19 @@ public class InventoryBuilder {
                 }
             }
         }
+        public void onInventoryMoved(InventoryDragEvent e){
+
+        }
+        @EventHandler
+        public void onInventoryClosed(InventoryCloseEvent e){
+            if (e.getInventory().getHolder() instanceof BuiltInventoryHolder holder){
+                holder.getBuilder().widgets.forEach((slot,widget)->{
+                    if (widget instanceof Slot slotWidget && !slotWidget.isOutput()){
+                        e.getPlayer().getInventory().addItem(Objects.requireNonNull(e.getInventory().getItem(slot)));
+                    }
+                });
+            }
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package net.crayonsmp.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.crayonsmp.PluginProvider;
 import net.crayonsmp.crafting.CustomCrafting;
 import net.crayonsmp.utils.ItemBuilder;
 import net.kyori.adventure.text.Component;
@@ -24,7 +25,12 @@ public class FeywoodTableRecipe extends CustomCrafting {
     }
     @Override
     public boolean matches(List<ItemStack> itemStacks) {
-        return itemStacks.get(0) == input0 && itemStacks.get(1) == input1;
+        PluginProvider.plugin.getLogger().info(itemStacks.get(0).getType().name() + " and input0 is: " + input0.getType().name() + ", " + itemStacks.get(1).getType().name() + " and input1 is: " + input1.getType().name());
+        return (itemStacks.get(0) == input0 && itemStacks.get(1) == input1) || (itemStacks.get(1) == input0 && itemStacks.get(0) == input1);
+    }
+
+    public ItemStack[] getOutputs() {
+        return outputs;
     }
 
     @Override
@@ -43,8 +49,7 @@ public class FeywoodTableRecipe extends CustomCrafting {
     }
 
     public static class Type extends CustomCraftingType<FeywoodTableRecipe> {
-
-
+        public static final Type INSTANCE = new Type();
         @Override
         public FeywoodTableRecipe read(JsonObject object, String name) {
             JsonArray inputs = object.getAsJsonArray("inputs");
