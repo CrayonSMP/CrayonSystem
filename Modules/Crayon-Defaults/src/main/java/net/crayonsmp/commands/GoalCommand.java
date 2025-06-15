@@ -1,7 +1,7 @@
 package net.crayonsmp.commands;
 
-import net.crayonsmp.utils.ChatUtil;
 import net.crayonsmp.services.GoalService;
+import net.crayonsmp.utils.ChatUtil;
 import net.crayonsmp.utils.goal.Goal;
 import net.crayonsmp.utils.goal.Magic;
 import net.crayonsmp.utils.goal.PlayerGoal;

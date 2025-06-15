@@ -1,9 +1,9 @@
 package net.crayonsmp.services;
 
 import net.crayonsmp.CrayonDefault;
+import net.crayonsmp.enums.GoalType;
 import net.crayonsmp.utils.config.SConfig;
 import net.crayonsmp.utils.goal.Goal;
-import net.crayonsmp.enums.GoalType;
 import net.crayonsmp.utils.goal.Magic;
 import net.crayonsmp.utils.goal.PlayerGoal;
 

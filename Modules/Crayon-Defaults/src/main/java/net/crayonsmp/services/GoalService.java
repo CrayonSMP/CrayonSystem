@@ -2,7 +2,10 @@ package net.crayonsmp.services;
 
 import net.crayonsmp.CrayonDefault;
 import net.crayonsmp.enums.GoalType;
-import net.crayonsmp.utils.goal.*;
+import net.crayonsmp.utils.goal.Goal;
+import net.crayonsmp.utils.goal.Magic;
+import net.crayonsmp.utils.goal.PlayerGoal;
+import net.crayonsmp.utils.goal.PlayerGoalPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;

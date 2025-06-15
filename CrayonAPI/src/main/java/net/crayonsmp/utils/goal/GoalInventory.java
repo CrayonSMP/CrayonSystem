@@ -1,21 +1,19 @@
 package net.crayonsmp.utils.goal;
 
-import lombok.Setter;
 import net.crayonsmp.enums.GoalType;
 import org.bukkit.inventory.Inventory;
 
 public class GoalInventory {
-
     private final Inventory inv;
+    public GoalType selectetPlaceholder;
     private final PlayerGoalPlaceholder goodPlaceholder;
     private final PlayerGoalPlaceholder neutralPlaceholder;
     private final PlayerGoalPlaceholder badPlaceholder;
-    @Setter
-    public GoalType selectetPlaceholder;
-    @Setter
+
     public Magic selectetPrimaryMagic;
-    @Setter
     public Magic selectetSecondaryMagic;
+
+
 
     public GoalInventory(Inventory inv, PlayerGoalPlaceholder goodPlaceholder, PlayerGoalPlaceholder neutralPlaceholder, PlayerGoalPlaceholder badPlaceholder) {
         this.inv = inv;
@@ -39,17 +37,22 @@ public class GoalInventory {
     public PlayerGoalPlaceholder getBadPlaceholder() {
         return badPlaceholder;
     }
-
     public GoalType getSelectetPlaceholder() {
         return selectetPlaceholder;
     }
-
+    public void setSelectetPlaceholder(GoalType selectetPlaceholder) {
+        this.selectetPlaceholder = selectetPlaceholder;
+    }
     public Magic getSelectetPrimaryMagic() {
         return selectetPrimaryMagic;
     }
-
+    public void setSelectetPrimaryMagic(Magic selectetPrimaryMagic) {
+        this.selectetPrimaryMagic = selectetPrimaryMagic;
+    }
     public Magic getSelectetSecondaryMagic() {
         return selectetSecondaryMagic;
     }
-
+    public void setSelectetSecondaryMagic(Magic selectetSecondaryMagic) {
+        this.selectetSecondaryMagic = selectetSecondaryMagic;
+    }
 }

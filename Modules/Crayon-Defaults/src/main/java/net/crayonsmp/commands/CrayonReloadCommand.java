@@ -1,13 +1,23 @@
 package net.crayonsmp.commands;
 
+import com.nexomc.nexo.api.NexoBlocks;
+import com.nexomc.nexo.api.NexoFurniture;
+import com.nexomc.nexo.api.NexoItems;
 import lombok.RequiredArgsConstructor;
+import net.crayonsmp.services.HttpService;
 import net.crayonsmp.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class CrayonReloadCommand implements CommandExecutor, Runnable {
@@ -63,6 +73,20 @@ public class CrayonReloadCommand implements CommandExecutor, Runnable {
                             Bukkit.broadcastMessage(ChatUtil.format("<#b2b2b2>Plugin reload sequence completed!"));
                         }
                     }.runTaskLater(Bukkit.getPluginManager().getPlugin("CrayonCore"), 20L * 5);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            Collection<? extends Player> onlinePlayersCollection = Bukkit.getOnlinePlayers();
+
+                            List<Player> onlinePlayersList = new ArrayList<>(onlinePlayersCollection);
+                            try {
+                                HttpService.sendStatsUpdate(NexoItems.items().size(), NexoBlocks.blockIDs().length, NexoFurniture.furnitureIDs().length, onlinePlayersList);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }.runTaskLater(Bukkit.getPluginManager().getPlugin("CrayonCore"), 20L * 7);
 
                     this.cancel();
                 }

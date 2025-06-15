@@ -15,7 +15,6 @@
         <module>CrayonCore</module>
         <module>CrayonAPI</module>
         <module>Modules/Crayon-Defaults</module>
-        <module>Modules/Feywood</module>
         <module>Modules/Villagerzock</module>
         <module>Modules/Tjorven</module>
     </modules>
@@ -89,7 +88,6 @@
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.21.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.nexomc</groupId>
@@ -111,7 +109,6 @@
             <groupId>io.lumine.xikage</groupId>
             <artifactId>MythicMobs</artifactId>
             <version>4.8.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.ticxo.modelengine</groupId>
@@ -137,7 +134,6 @@
             <groupId>com.jeff-media</groupId>
             <artifactId>custom-block-data</artifactId>
             <version>2.2.2</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

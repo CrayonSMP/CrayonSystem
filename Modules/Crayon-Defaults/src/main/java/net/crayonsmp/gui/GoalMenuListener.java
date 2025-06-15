@@ -1,9 +1,9 @@
 package net.crayonsmp.gui;
 
-import net.crayonsmp.services.GoalService;
-import net.crayonsmp.utils.*;
-import net.crayonsmp.utils.goal.GoalInventory;
 import net.crayonsmp.enums.GoalType;
+import net.crayonsmp.services.GoalService;
+import net.crayonsmp.utils.ItemBuilder;
+import net.crayonsmp.utils.goal.GoalInventory;
 import net.crayonsmp.utils.goal.Magic;
 import net.crayonsmp.utils.goal.PlayerGoal;
 import org.bukkit.Bukkit;
@@ -35,18 +35,18 @@ public class GoalMenuListener implements Listener {
 
         if(GoalMenu.goalInventories.containsKey(p) && !GoalService.hasPlayerGoalData(p)){
             GoalInventory goalInventory = GoalMenu.goalInventories.get(p);
-            if (goalInventory.selectetPlaceholder != null && goalInventory.selectetPrimaryMagic != null && goalInventory.selectetSecondaryMagic != null){
-                if (goalInventory.selectetPlaceholder.equals(GoalType.GOOD)) {
+            if (goalInventory.getSelectetPlaceholder() != null && goalInventory.selectetPrimaryMagic != null && goalInventory.selectetSecondaryMagic != null){
+                if (goalInventory.getSelectetPlaceholder().equals(GoalType.GOOD)) {
                     GoalService.addPlayerGoalData(p.getUniqueId().toString(), new PlayerGoal(goalInventory.getGoodPlaceholder().getGoal(), goalInventory.selectetPrimaryMagic, goalInventory.selectetSecondaryMagic));
                     GoalMenu.goalInventories.remove(p);
                     p.sendMessage("You can always look at your goal with /goal");
                 }
-                else if (goalInventory.selectetPlaceholder.equals(GoalType.NEUTRAL)) {
+                else if (goalInventory.getSelectetPlaceholder().equals(GoalType.NEUTRAL)) {
                     GoalService.addPlayerGoalData(p.getUniqueId().toString(), new PlayerGoal(goalInventory.getNeutralPlaceholder().getGoal(), goalInventory.selectetPrimaryMagic, goalInventory.selectetSecondaryMagic));
                     GoalMenu.goalInventories.remove(p);
                     p.sendMessage("You can always look at your goal with /goal");
                 }
-                else if (goalInventory.selectetPlaceholder.equals(GoalType.BAD)) {
+                else if (goalInventory.getSelectetPlaceholder().equals(GoalType.BAD)) {
                     GoalService.addPlayerGoalData(p.getUniqueId().toString(), new PlayerGoal(goalInventory.getBadPlaceholder().getGoal(), goalInventory.selectetPrimaryMagic, goalInventory.selectetSecondaryMagic));
                     GoalMenu.goalInventories.remove(p);
                     p.sendMessage("You can always look at your goal with /goal");
@@ -114,7 +114,7 @@ public class GoalMenuListener implements Listener {
                 }
                 else if (clickedSlot == 22) {
                     Magic magic = null;
-                        switch (Goalinv.selectetPlaceholder){
+                        switch (Goalinv.getSelectetPlaceholder()){
                             case GOOD:
                                 magic = Goalinv.getGoodPlaceholder().getMagicPrimeryList().get(0);
                                 GoalMenu.resetPrimeryMagics(Goalinv.getInv(), Goalinv.getGoodPlaceholder());
@@ -135,7 +135,7 @@ public class GoalMenuListener implements Listener {
                 }
                 else if (clickedSlot == 24) {
                     Magic magic = null;
-                    switch (Goalinv.selectetPlaceholder){
+                    switch (Goalinv.getSelectetPlaceholder()){
                         case GOOD:
                             magic = Goalinv.getGoodPlaceholder().getMagicPrimeryList().get(1);
                             GoalMenu.resetPrimeryMagics(Goalinv.getInv(), Goalinv.getGoodPlaceholder());
@@ -156,7 +156,7 @@ public class GoalMenuListener implements Listener {
                 }
                 else if (clickedSlot == 26) {
                     Magic magic = null;
-                    switch (Goalinv.selectetPlaceholder){
+                    switch (Goalinv.getSelectetPlaceholder()){
                         case GOOD:
                             magic = Goalinv.getGoodPlaceholder().getMagicPrimeryList().get(2);
                             GoalMenu.resetPrimeryMagics(Goalinv.getInv(), Goalinv.getGoodPlaceholder());
@@ -177,7 +177,7 @@ public class GoalMenuListener implements Listener {
                 }
                 else if (clickedSlot == 40) {
                     Magic magic = null;
-                    switch (Goalinv.selectetPlaceholder){
+                    switch (Goalinv.getSelectetPlaceholder()){
                         case GOOD:
                             magic = Goalinv.getGoodPlaceholder().getMagicSecondaryList().get(0);
                             GoalMenu.resetSecondaryMagics(Goalinv.getInv(), Goalinv.getGoodPlaceholder());
@@ -198,7 +198,7 @@ public class GoalMenuListener implements Listener {
                 }
                 else if (clickedSlot == 42) {
                     Magic magic = null;
-                    switch (Goalinv.selectetPlaceholder){
+                    switch (Goalinv.getSelectetPlaceholder()){
                         case GOOD:
                             magic = Goalinv.getGoodPlaceholder().getMagicSecondaryList().get(1);
                             GoalMenu.resetSecondaryMagics(Goalinv.getInv(), Goalinv.getGoodPlaceholder());
@@ -219,7 +219,7 @@ public class GoalMenuListener implements Listener {
                 }
 
                 InventoryView openView = p.getOpenInventory();
-                if (Goalinv.selectetPlaceholder != null && Goalinv.selectetPrimaryMagic != null && Goalinv.selectetSecondaryMagic != null) {
+                if (Goalinv.getSelectetPlaceholder() != null && Goalinv.selectetPrimaryMagic != null && Goalinv.selectetSecondaryMagic != null) {
 
                     openView.setTitle("<shift:-37><glyph:menu_goals_esc>");
                     p.updateInventory();

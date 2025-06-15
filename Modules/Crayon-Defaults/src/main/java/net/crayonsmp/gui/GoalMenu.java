@@ -1,10 +1,10 @@
 package net.crayonsmp.gui;
 
-import net.crayonsmp.utils.ChatUtil;
-import net.crayonsmp.services.GoalService;
-import net.crayonsmp.utils.*; // Stelle sicher, dass alle benötigten Utilities hier sind
-import net.crayonsmp.utils.goal.GoalInventory;
 import net.crayonsmp.enums.GoalType;
+import net.crayonsmp.services.GoalService;
+import net.crayonsmp.utils.ChatUtil;
+import net.crayonsmp.utils.ItemBuilder;
+import net.crayonsmp.utils.goal.GoalInventory;
 import net.crayonsmp.utils.goal.Magic;
 import net.crayonsmp.utils.goal.PlayerGoalPlaceholder;
 import org.bukkit.Bukkit;
@@ -29,16 +29,15 @@ public class GoalMenu {
         PlayerGoalPlaceholder NeutralplayerGoalPlaceholder = GoalService.getPlayerGoalPlaceholder(GoalService.getRandomGoalByType(GoalType.NEUTRAL));
         PlayerGoalPlaceholder BadplayerGoalPlaceholder = GoalService.getPlayerGoalPlaceholder(GoalService.getRandomGoalByType(GoalType.BAD));
 
-        GoalInventory goalinv = new GoalInventory(inv, GoodplayerGoalPlaceholder, NeutralplayerGoalPlaceholder, BadplayerGoalPlaceholder);
+        GoalInventory goalInventory = new GoalInventory(inv, GoodplayerGoalPlaceholder, NeutralplayerGoalPlaceholder, BadplayerGoalPlaceholder);
         //----------------------
 
-        goalInventories.put(player, goalinv); // Hinzugefügt: Spieler und GoalInventory in die Map
+        goalInventory.setSelectetPlaceholder(GoalType.GOOD);
+        setDefaultModelData(goalInventory); // Resets all to default (unselected)
+        inv.setItem(0, new ItemBuilder().setMaterial(Material.IRON_NUGGET).setTitle("§r" + goalInventory.getGoodPlaceholder().getGoal().getName()).setCustomModelData(2001).build());
+        setSelectetGoal(goalInventory); // This will populate the main content based on the selected goal type
 
-        goalinv.setSelectetPlaceholder(GoalType.GOOD);
-        setDefaultModelData(goalinv); // Resets all to default (unselected)
-        inv.setItem(0, new ItemBuilder().setMaterial(Material.IRON_NUGGET).setTitle("§r" + goalinv.getGoodPlaceholder().getGoal().getName()).setCustomModelData(2001).build());
-        setSelectetGoal(goalinv); // This will populate the main content based on the selected goal type
-
+        goalInventories.put(player, goalInventory);
         player.openInventory(inv); // Inventar jetzt öffnen
     }
 
@@ -75,11 +74,11 @@ public class GoalMenu {
     }
 
     public static void setSelectetGoal(GoalInventory goalInventory){
-        if(goalInventory.selectetPlaceholder.equals(GoalType.GOOD)){
+        if(goalInventory.getSelectetPlaceholder().equals(GoalType.GOOD)){
             setGoalItems(goalInventory.getInv(), goalInventory.getGoodPlaceholder());
-        } else if(goalInventory.selectetPlaceholder.equals(GoalType.NEUTRAL)){
+        } else if(goalInventory.getSelectetPlaceholder().equals(GoalType.NEUTRAL)){
             setGoalItems(goalInventory.getInv(), goalInventory.getNeutralPlaceholder());
-        } else if(goalInventory.selectetPlaceholder.equals(GoalType.BAD)){
+        } else if(goalInventory.getSelectetPlaceholder().equals(GoalType.BAD)){
             setGoalItems(goalInventory.getInv(), goalInventory.getBadPlaceholder());
         }
     }

@@ -76,14 +76,6 @@
   </build>
 
   <dependencies>
-
-    <dependency>
-      <groupId>net.crayonsmp</groupId>
-      <artifactId>CrayonAPI</artifactId>
-      <version>1.0-Crayon</version>
-      <scope>compile</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
@@ -97,11 +89,6 @@
     <dependency>
       <groupId>net.crayonsmp</groupId>
       <artifactId>Villagerzock</artifactId>
-      <version>1.0-Crayon</version>
-    </dependency>
-    <dependency>
-      <groupId>net.crayonsmp</groupId>
-      <artifactId>Feywood</artifactId>
       <version>1.0-Crayon</version>
     </dependency>
     <dependency>

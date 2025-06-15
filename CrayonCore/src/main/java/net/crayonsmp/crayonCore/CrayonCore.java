@@ -181,4 +181,9 @@ public class CrayonCore extends JavaPlugin implements CrayonAPI {
     public String getPrefix() {
         return ChatUtil.format(config.getString("prefix") != null ? config.getString("prefix") : "&8[&bCrayon&8]&r ");
     }
+
+    @Override
+    public SConfig getConfig() {
+        return config;
+    }
 }
